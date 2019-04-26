@@ -86,7 +86,7 @@ const sweepScript = `
     const text = comment.innerText;
 
     for (illegal of illegals) {
-      if (text.indexOf(illegal) !== -1) {
+      if (text.toLowerCase().indexOf(illegal) !== -1) {
         comment.innerText = "NOT TODAY SATAN";
       }
     }
@@ -96,7 +96,7 @@ const sweepScript = `
     const text = comment.innerText;
 
     for (illegal of illegals) {
-      if (text.indexOf(illegal) !== -1) {
+      if (text.toLowerCase().indexOf(illegal) !== -1) {
         comment.innerText = "NOT TODAY SATAN";
       }
     }
