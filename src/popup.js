@@ -5,7 +5,7 @@ popup.html and all javascript here is still running in a different context, whic
 
 const activeButton = document.getElementById("activateButton");
 
-
+// Ensure that the button is showing the correct status based on if the script is sweeping or not
 (function() {
   chrome.storage.sync.get("blockerMode", function (obj) {
     if (obj.blockerMode === "online") {
