@@ -21,9 +21,11 @@ chrome.runtime.onInstalled.addListener(function() {
           actions: [new chrome.declarativeContent.ShowPageAction()]
     }]);
   });
+  // Set initial blockerMode to offline for user -> Needed otherwise
+  // separate html context of popup will not properly display state
   chrome.storage.sync.set({blockerMode: 'offline'}, function() {
       console.log("Blocker offline");
-    });
+  });
 });
 
 
@@ -31,6 +33,8 @@ let sweepInterval = 1000;
 let checkSweepStatusInterval = 10;
 let sweepFeed = null;
 let activated = false;
+
+// Script running in background when blocker is activated
 const sweepScript = `
 (function () {
   const illegals = [
@@ -89,22 +93,22 @@ const sweepScript = `
   console.log("Sweeping...");
 })();
 `
-
+// This interval checks wether or not it should clear the sweeping interval
 setInterval( () => {chrome.storage.sync.get("blockerMode", function (obj) {
-  if (obj.hasOwnProperty("blockerMode")) {
-    if (obj.blockerMode === "offline") {
-      if (sweepFeed !== null) clearInterval(sweepFeed);
-      activated = false;
+
+  if (obj.blockerMode === "offline") {
+    if (sweepFeed !== null) clearInterval(sweepFeed);
+    activated = false;
+  }
+
+  else if (obj.blockerMode === "online") {
+    if (activated == false) {
+      sweepFeed = setInterval(() => {
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+          chrome.tabs.executeScript(tabs[0].id, {code: sweepScript});
+        });
+      }, sweepInterval);
     }
-    else if (obj.blockerMode === "online") {
-      if (activated == false) {
-        sweepFeed = setInterval(() => {
-          chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            chrome.tabs.executeScript(tabs[0].id, {code: sweepScript});
-          });
-        }, sweepInterval);
-      }
-      activated = true;
-    }
+    activated = true;
   }
 });}, checkSweepStatusInterval);
