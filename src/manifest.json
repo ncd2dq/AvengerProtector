@@ -1,1 +1,27 @@
 
+{
+    "name": "Avenger Protector",
+    "version": "1.0",
+    "description": "Obscure all words on a page that could contain references to the avengers end game",
+    "permissions": ["activeTab", "declarativeContent", "storage"],
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": true
+    },
+    "page_action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "assets/get_started16.png",
+        "32": "assets/get_started32.png",
+        "48": "assets/get_started48.png",
+        "128": "assets/get_started128.png"
+      }
+    },
+    "icons": {
+      "16": "assets/get_started16.png",
+      "32": "assets/get_started32.png",
+      "48": "assets/get_started48.png",
+      "128": "assets/get_started128.png"
+    },
+    "manifest_version": 2
+  }
