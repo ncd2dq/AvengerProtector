@@ -67,6 +67,7 @@ const sweepScript = `
   ]
   const divs =  document.querySelectorAll('.userContent');
   const comments = document.querySelectorAll('._3l3x');
+  const singlePageComments = document.querySelectorAll(".UFICommentBody");
 
   /*
   for (div of divs) {
@@ -90,6 +91,17 @@ const sweepScript = `
       }
     }
   }
+
+  for (comment of singlePageComments) {
+    const text = comment.innerText;
+
+    for (illegal of illegals) {
+      if (text.indexOf(illegal) !== -1) {
+        comment.innerText = "NOT TODAY SATAN";
+      }
+    }
+  }
+
   console.log("Sweeping...");
 })();
 `
