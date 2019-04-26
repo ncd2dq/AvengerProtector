@@ -1,10 +1,21 @@
 
-
 /*
 popup.html and all javascript here is still running in a different context, which is why you still need to send code via the chrome.tabs.executeScript()
 */
 
 const activeButton = document.getElementById("activateButton");
+
+
+(function() {
+  chrome.storage.sync.get("blockerMode", function (obj) {
+    if (obj.blockerMode === "online") {
+      activeButton.innerText = "Deactivate";
+    }
+    else {
+      activeButton.innerText = "Activate";
+    }
+  });
+})();
 
 activeButton.onclick = function(element) {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
