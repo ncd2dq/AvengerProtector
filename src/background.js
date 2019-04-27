@@ -29,7 +29,7 @@ chrome.runtime.onInstalled.addListener(function() {
 });
 
 
-let sweepInterval = 1000;
+let sweepInterval = 2500;
 let checkSweepStatusInterval = 10;
 let sweepFeed = null;
 let activated = false;
@@ -63,24 +63,32 @@ const sweepScript = `
     "mu",
     "mcu",
     "stan lee",
-    "lee"
+    "tony stark",
+    "tonystark",
+    "batman",
+    "bat man",
+    "tonight",
+    "watch",
+    "cinema",
+    "ending"
   ]
   const divs =  document.querySelectorAll('.userContent');
+
   const comments = document.querySelectorAll('._3l3x');
   const singlePageComments = document.querySelectorAll(".UFICommentBody");
 
-  /*
+
   for (div of divs) {
     const html = div.innerHTML;
 
     for (illegal of illegals) {
-      const matcher = new RegExp("<p>.*" + illegal + ".*</p>");
-      if (html.match(matcher) !== null) {
-        div.innerHTML.replace("<p>NONE OF THIS, NOPE!</p>")
+      const matcher1 = new RegExp(".*" + illegal + ".*");
+      if (html.toLowerCase().match(matcher1) !== null) {
+        div.innerHTML = "<p>NONE OF THIS, NOPE!</p>"
       }
     }
   }
-  */
+
 
   for (comment of comments) {
     const text = comment.innerText;
